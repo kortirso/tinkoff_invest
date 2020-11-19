@@ -22,7 +22,60 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Create client object.
+
+```ruby
+  require 'tinkoff_invest'
+  service = TinkoffInvest::V1::Client.new(token: 'token', sandbox: false)
+```
+
+### Stocks
+
+Request for getting stocks list.
+
+```ruby
+  service.stocks
+```
+
+### Bonds
+
+Request for getting bonds list.
+
+```ruby
+  service.bonds
+```
+
+### Foundations
+
+Request for getting foundations list.
+
+```ruby
+  service.etfs
+```
+
+### Search by ticker
+
+Request for getting security by ticker.
+
+```ruby
+  service.search_by_ticker(ticker: 'ticker')
+```
+
+### Search by FIGI
+
+Request for getting security by FIGI.
+
+```ruby
+  service.search_by_figi(figi: 'figi')
+```
+
+### Orderbook
+
+Request for getting security's orderbook by FIGI.
+
+```ruby
+  service.orderbook(figi: 'figi', depth: 0)
+```
 
 ## Development
 
