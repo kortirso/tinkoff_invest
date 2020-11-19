@@ -4,12 +4,22 @@ require 'faraday'
 require 'faraday_middleware'
 require 'dry/initializer'
 require_relative 'market/stocks'
+require_relative 'market/bonds'
+require_relative 'market/etfs'
+require_relative 'market/orderbook'
+require_relative 'market/search_by_figi'
+require_relative 'market/search_by_ticker'
 
 module TinkoffInvest
   module V1
     class Client
       extend Dry::Initializer
       include TinkoffInvest::V1::Market::Stocks
+      include TinkoffInvest::V1::Market::Bonds
+      include TinkoffInvest::V1::Market::Etfs
+      include TinkoffInvest::V1::Market::Orderbook
+      include TinkoffInvest::V1::Market::SearchByFigi
+      include TinkoffInvest::V1::Market::SearchByTicker
 
       option :token
       option :sandbox, default: proc { true }
@@ -19,7 +29,7 @@ module TinkoffInvest
       private
 
       def build_connection
-        Faraday.new(base_url, headers: connection_header) do |conn|
+        Faraday.new(base_url, headers: connection_headers) do |conn|
           conn.request :json
           conn.response :json, content_type: /\bjson$/
           conn.adapter Faraday.default_adapter
